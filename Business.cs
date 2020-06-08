@@ -7,6 +7,130 @@ using System.Threading.Tasks;
 
 namespace CTDL
 {
+    class Node
+    {
+        int number;
+        Node next;
+        public Node()
+        {
+            number = 0;
+            next = null;
+        }
+        public Node( int a_number)
+        {
+            number = a_number;
+            next = null;
+        }
+        public Node AddHead(int value)
+        {
+            Node newNode = new Node(value);
+            newNode.next = this;
+            return newNode;
+        }
+        public Node AddLast(int value)
+        {
+            Node newNode = new Node(value);
+            next = newNode;
+            return newNode;
+        }
+        public int GetValue()
+        {
+            return number;
+        }
+        public Node GetNext()
+        {
+            return next;
+        }
+    }
+
+    class LinkedList
+    {
+        Node head;
+        Node tail;
+        public LinkedList()
+        {
+            head = null;
+            tail = null;
+        }
+        public void AddHead(int value)
+        {
+            if (head == null)
+            {
+                head = new Node(value);
+                tail = head;
+            }
+            else
+                head = head.AddHead(value);
+        }
+        public void AddLast(int value)
+        {
+            if (head == null)
+            {
+                head = new Node(value);
+                tail = head;
+            }
+            else
+                tail = tail.AddLast(value);
+        }
+        // GetHead, RemoveHead
+        public int GetHead()
+        {
+            // Empty LinkedList?
+            if (head == null)
+                throw new Exception("LinkedList is empty");
+            return head.GetValue();
+        }
+        public void RemoveHead()
+        {
+            if (head == null)
+                throw new Exception("LinkedList is empty");
+            head = head.GetNext();
+        }
+        public bool IsEmpty()
+        {
+            return head == null;
+        }
+    }
+
+    class Queue
+    {
+        // Direction 1: store LinkedList
+        LinkedList list;
+        // Direction 2: store Node head, tail
+        // Node head;
+        // Node tail;
+
+        public Queue()
+        {
+            // head = null;
+            // tail = null;
+            list = new LinkedList();
+        }
+
+        public void Enqueue(int value)
+        {
+            list.AddLast(value);
+        }
+        public int Dequeue()
+        {
+            int value = list.GetHead();
+            list.RemoveHead();
+            return value;
+        }
+        public bool IsEmpty()
+        {
+            return list.IsEmpty();
+        }
+        public bool IsFull()
+        {
+            return false;
+        }
+        public int Peak()
+        {
+            return list.GetHead();
+        }
+    }
+}
     
     class Business
      {
@@ -101,5 +225,6 @@ namespace CTDL
             }
             Console.WriteLine(s);
         }
+      
     }
-}
+
